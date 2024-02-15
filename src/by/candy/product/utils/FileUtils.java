@@ -13,11 +13,11 @@ import by.candy.product.builders.Director;
 import by.candy.product.builders.SweetsBuilder;
 import by.candy.product.builders.SweetsBuildersPool;
 import by.candy.product.entity.Sweet;
-import org.apache.log4j.Logger;
+
 
 public class FileUtils {
 
-	private static final Logger log = Logger.getLogger("FileUtils.class");
+
 
 	public static final String FILE_FULL_PATH = "./res/Sweets.txt";
 
@@ -34,7 +34,7 @@ public class FileUtils {
 			sweetsList = creatCertainObjects(sweetSet);
 
 		} catch (IOException e) {
-			log.error(e);
+			System.out.println(e);
 		}
 
 		return sweetsList;
@@ -57,12 +57,12 @@ public class FileUtils {
 					int count = Integer.parseInt(splitedRow[1]);
 					map.put(splitedRow[0], count);
 				} catch (NumberFormatException e) {
-					log.error(e);
+					System.out.println(e);
 				}
 
 			} else {
 				if (!("".equals(splitedRow[0]))) {
-					log.warn("Invalid row`s format: " + fileRows.get(i));
+					System.out.println("Invalid row`s format: " + fileRows.get(i));
 				}
 			}
 		}
@@ -76,15 +76,6 @@ public class FileUtils {
 		SweetsBuildersPool sbp = new SweetsBuildersPool();
 		Director director = new Director();
 
-		/*
-		 * Here we compare certain class simple name in builder`s pool with
-		 * one`s type of sweet in our file. Thus, we specify in file name of
-		 * certain builder`s class. Of course we could create pool with
-		 * builder`s objects and during iteration just ask some field "name" and
-		 * compare it for example, but in this case we had to create all objects
-		 * in the pool. But now we can create objects ONLY if "string" element
-		 * equals to our class. I thought it would be better :)
-		 */
 
 		for (Map.Entry<String, Integer> element : sweetSet.entrySet()) {
 
@@ -103,7 +94,7 @@ public class FileUtils {
 						}
 
 					} catch (InstantiationException | IllegalAccessException e) {
-						log.error(e);
+						System.out.println(e.getMessage());
 					}
 					count--;
 				}
@@ -111,7 +102,7 @@ public class FileUtils {
 			}
 
 			if (count == sbp.getPoolSize()) {
-				log.warn("Such builder doesn`t exist: " + element.getKey());
+				System.out.println("Such builder doesn`t exist: " + element.getKey());
 			}
 		}
 
